@@ -3,6 +3,7 @@ import React, { useState, useReducer } from 'react'
 // import { TodoForm } from './TodoForm'
 
 import { initialState, reducer } from '../reducer/TodoReducer'
+import './todo.css'
 
 const Todo = () => {
     const [todoItem, setTodoItem] = useState('')
@@ -11,6 +12,12 @@ const Todo = () => {
 
     const handleInputs = e => {
         setTodoItem(e.target.value)
+    }
+
+    const markComplete = e => {
+        if (state.todo.completed === true) {
+            return
+        }
     }
     return (
         <div>
@@ -26,9 +33,12 @@ const Todo = () => {
 
             {state.todo.map(input => {
                 return (
-                    <p>{input.item}</p>
+                    <p onClick={() => dispatch({ type: 'TOGGLE_COMPLETED', payload: input.id })}
+                        className={input.completed ? 'task-completed' : 'Hello'}
+                    >{input.item}</p>
                 )
             })}
+            <button onClick={() => dispatch({ type: 'CLEAR_COMPLETED' })}>Clear Completed Tasks</button>
         </div>
     )
 }
